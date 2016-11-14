@@ -1,0 +1,10 @@
+#+TITLE: Ledger-Chart
+#+AUTHOR: Maximilian Kuschewski
+#+OPTIONS: toc:nil date:nil
+#+LaTeX_HEADER:\usepackage[margin=3cm]{geometry}
+#+LaTeX_HEADER:\usepackage{setspace}
+
+A WIP chart/visualization tool for [[http://ledger-cli.org][ledger-cli ]]written in clojure.
+
+Will start a local webserver used to visualize the ledger data with
+some js chart library once its working
