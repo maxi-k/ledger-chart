@@ -40,7 +40,6 @@
   [data]
   (json/write-str data))
 
-;; TODO: Not working yet.
 (defn walk-structure
   ([f s] (walk-structure f f s))
   ;; (not empty? keys) => (map? result)
@@ -73,10 +72,6 @@
                           col))
                       [] s))
        (handler (fnm s))))))
-
-(defn tap [f x]
-  (println (f x))
-  x)
 
 (defn get-accounts [xml]
   (->> xml
