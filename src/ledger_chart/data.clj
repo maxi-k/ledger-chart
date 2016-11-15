@@ -18,12 +18,8 @@
 (defn parse-xml
   "Parses given xml string into clojure data."
   [xml-str]
-  (let [xml (xml/parse (java.io.ByteArrayInputStream. (.getBytes xml-str)))
-        lol (print (:tag xml))
-        accounts (get-accounts xml)]
-    (print (:tag accounts))
-    accounts
-    ))
+  (get-accounts
+   (xml/parse (java.io.ByteArrayInputStream. (.getBytes xml-str)))))
 
 (defn store-data
   "Stores the given clojure data in the data-store atom."
@@ -78,10 +74,21 @@
                       [] s))
        (handler (fnm s))))))
 
-(defn get-accounts [xml]
-  (let [accounts (->> xml
-                      :content
-                      (filter #(and (map? %) (= (% :tag) :accounts))))
+(defn tap [f x]
+  (println (f x))
+  x)
 
-        ]
-    accounts))
+(defn get-accounts [xml]
+  (->> xml
+       :content
+       (filter #(and (map? %) (= (% :tag) :accounts)))
+       first
+       :content
+       (walk-structure
+        (fn [elem]
+          (when (and (map? elem) (= :account (:tag elem)))
+            (let [content (:content elem)]
+              {:result {:amount (-> content (nth 2) :content first :content second :content first)
+                        :name (-> content first :content first)
+                        :accounts content}
+               :recur-on :accounts}))))))
