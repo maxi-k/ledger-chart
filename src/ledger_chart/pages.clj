@@ -1,6 +1,14 @@
 (ns ledger-chart.pages
   (:require [hiccup.page :as h]))
 
+(def styles ["css/normalize.css"
+             "css/core.css"])
+
+(def javascripts
+  ["js/jquery-3.1.1.min.js"
+   "js/Chart.bundle.min.js"
+   "js/core.js"])
+
 (defn index
   "Index page."
   []
@@ -8,9 +16,15 @@
    {:lang :en}
    [:head
     [:title "Finance Chart"]
-    (h/include-css "css/core.css")
-    (h/include-js "js/core.js")]
+    (map h/include-css styles)
+    (map h/include-js javascripts)]
    [:body
     [:div#content
-     "This is content."
+     [:div#sidebar
+      [:div#title [:h1 "Ledger-Chart"]]
+      [:div#chart-selector]
+      [:div#navigation]]
+     [:div#charts
+      [:div#charts-js-wrapper]]
+     [:div.clearfloat]
      ]]))

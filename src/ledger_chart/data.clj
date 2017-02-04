@@ -1,6 +1,7 @@
 (ns ledger-chart.data
   (:require [clojure.java.shell :as shell]
             [clojure.data.json :as json]
+            [clojure.string :as str]
             [clojure.xml :as xml]))
 
 (declare get-accounts)
@@ -21,24 +22,43 @@
   (get-accounts
    (xml/parse (java.io.ByteArrayInputStream. (.getBytes xml-str)))))
 
-(defn store-data
-  "Stores the given clojure data in the data-store atom."
-  [data]
-  (reset! data-store data))
-
-(defn lens-data
-  "'Zooms' into the given data with given lens."
-  [data lens]
-  (if (empty? lens)
-    data
-    (get-in data lens)))
-
 (defn jsonify-data
   "Converts the given data into json
   that can be sent back to the client
   for display."
   [data]
   (json/write-str data))
+
+(defn store-data
+  "Stores the given clojure data in the data-store atom."
+  [data]
+  (reset! data-store data))
+
+(defn lens-from-str [s]
+  (str/split s #":"))
+
+(defn lens-data
+  "'Zooms' into the given data with given lens."
+  [data lens]
+  (if (empty? lens)
+    data
+    (let [orig-path (if (string? lens) (lens-from-str lens) lens) ]
+      (loop [path orig-path
+             cursor data
+             idx 0]
+        (if (or (>= idx (count cursor)) (nil? (cursor idx)))
+          nil
+          (let [account (cursor idx)
+                name (:name account)]
+            (if (nil? name)
+              (recur path (:accounts account) 0)
+              (if (= (first path) name)
+                (if (= 1 (count path))
+                  account
+                  (recur (rest path)
+                         (:accounts account)
+                         0))
+                (recur path cursor (inc idx))))))))))
 
 (defn walk-structure
   ([f s] (walk-structure f f s))
@@ -85,5 +105,6 @@
             (let [content (:content elem)]
               {:result {:amount (-> content (nth 2) :content first :content second :content first)
                         :name (-> content first :content first)
+                        :full-name (-> content second :content first)
                         :accounts content}
                :recur-on :accounts}))))))

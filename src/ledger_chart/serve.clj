@@ -6,16 +6,17 @@
             [compojure.route :as route]
             [ring.adapter.jetty :refer :all] ;; <-- need a server!
             [ledger-chart.pages :as pages]
-            [ledger-chart.data :as data]))
+            [ledger-chart.data :as data]
+            [clojure.data.json :as json]))
 
-(declare parse-lens)
+(defn handle-lens-request [lenses]
+  (data/jsonify-data
+   (map (fn [lens]
+          (-> @data/data-store
+              (data/lens-data lens))) lenses)))
 
 (defroutes service-routes
-  (GET "/data/:lens" [lens]
-       (-> @data/data-store
-           (data/lens-data (parse-lens lens))
-           (data/jsonify-data))
-   )
+  (POST "/data" {{lenses :lenses} :params :as req} (handle-lens-request lenses))
   (GET "/" [] (pages/index))
   (route/resources "/")
   (route/not-found "There's nothing here. Move along!"))
@@ -30,12 +31,3 @@
   (let [port 8765]
     (browse/browse-url (str "http://localhost:" port))
     (run-jetty service {:port port})))
-
-(defn- parse-lens
-  "Parses given url data request into a 'lens'
-  used to zoom into the ledger data."
-  [url]
-  (if (empty? url)
-    []
-    (map keyword
-         (clojure.string/split url ":"))))
