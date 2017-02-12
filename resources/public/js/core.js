@@ -102,7 +102,6 @@
         this.canvas = $('#chart');
         this.type_selector_wrapper = type_selector_wrapper;
 
-
         this.chart = null;
         this.chart_options = null;
         this.chart_type = 'bar';
@@ -122,6 +121,10 @@
         this.type_selector = $('#chart-type-select');
 
         this.delete_chart = function() {
+            if (self.canvas != null) {
+                var c = self.canvas[0];
+                c.getContext('2d').clearRect(0, 0, c.width, c.height);
+            }
             if (self.chart != null) {
                 self.chart.destroy();
             }
@@ -132,8 +135,24 @@
                 self.delete_chart();
                 self.chart_options.type = self.chart_type;
                 self.chart = new Chart(self.canvas, self.chart_options);
+                self.size_canvas(true);
             }
         };
+
+        this.size_canvas = function(prevent_reload) {
+            var width = $(window).innerWidth() - 352,
+                height = $(window).innerHeight();
+            var c = self.canvas;
+            c.width(width);
+            c.height(height);
+            c[0].width = width;
+            c[0].height = height;
+            if (typeof(prevent_reload) == 'undefined' || prevent_reload == false) {
+                self.reload_chart();
+            }
+        };
+        $(window).resize(function(e) { self.size_canvas(); });
+        this.size_canvas();
 
         this.initialize_type_selector = function(select) {
             var s = '';
@@ -149,27 +168,9 @@
         };
         this.initialize_type_selector(this.type_selector);
 
-        this.size_canvas = function(timeout) {
-            var width = $(window).width() - 352,
-                height = $(window).height();
-            self.canvas.width(width);
-            self.canvas.height(height);
-            var c = self.canvas[0];
-            c.width = width;
-            c.height = height;
-            self.reload_chart();
-            if (typeof(timeout) !== 'undefined') {
-                setTimeout(function() { self.size_canvas(); }, 1000);
-            }
-        };
-
-        $(window).resize(function(e) { self.size_canvas(); });
-        this.size_canvas();
-
         this.update_chart = function(tree) {
             self.delete_chart();
             var parsed = tree.get_subamounts();
-            console.log(parsed);
             self.chart_options = {
                 type: self.chart_type,
                 data: {
