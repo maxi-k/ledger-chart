@@ -75,7 +75,7 @@ html, body {
 }
 
 #charts {
-    float: left;
+    float: right;
 }
 
 #charts-js-wrapper {

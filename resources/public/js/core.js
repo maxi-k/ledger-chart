@@ -128,6 +128,9 @@
             if (self.chart != null) {
                 self.chart.destroy();
             }
+            self.parent.html('');
+            self.parent.html("<canvas id='chart'></canvas>");
+            self.canvas = $('#chart');
         };
 
         this.reload_chart = function() {
@@ -140,7 +143,7 @@
         };
 
         this.size_canvas = function(prevent_reload) {
-            var width = $(window).innerWidth() - 352,
+            var width = $(window).innerWidth() - $('#sidebar').outerWidth() - 40,
                 height = $(window).innerHeight();
             var c = self.canvas;
             c.width(width);
