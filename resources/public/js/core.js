@@ -128,9 +128,6 @@
             if (self.chart != null) {
                 self.chart.destroy();
             }
-            self.parent.html('');
-            self.parent.html("<canvas id='chart'></canvas>");
-            self.canvas = $('#chart');
         };
 
         this.reload_chart = function() {
