@@ -1,7 +1,6 @@
 (ns ledger-chart.core
-    (:require [cljs.nodejs :as nodejs]))
-
-(def path (nodejs/require "path"))
+  (:require [cljs.nodejs :as nodejs]
+            [ledger-chart.util :as util]))
 
 (def Electron (nodejs/require "electron"))
 
@@ -16,8 +15,8 @@
 (def app (.-app Electron))
 
 (defn -main []
-  (.start crash-reporter (clj->js {:companyName "Your Company Name"
-                                   :submitURL   "http://example.com/"}))
+  (.start crash-reporter (clj->js {:companyName "Maximilian Kuschewski"
+                                   :submitURL   "maximilian-kuschewski.de"}))
 
   ;; error listener
   (.on nodejs/process "error"
@@ -31,12 +30,13 @@
   ;; ready listener
   (.on app "ready"
        (fn []
-         (reset! *win* (BrowserWindow. (clj->js {:width 800 :height 600})))
+         (reset! *win* (BrowserWindow. (clj->js {:width 800
+                                                 :height 600})))
 
          ;; when no optimize comment out
-         (.loadURL @*win* (str "file://" (.resolve path (js* "__dirname") "../index.html")))
+         (.loadURL @*win* (str "file://" (util/app-path "../index.html")))
          ;; when no optimize uncomment
-         ;; (.loadURL @*win* (str "file://" (.resolve path (js* "__dirname") "../../../index.html")))
+         ;; (.loadURL @*win* (str "file://" (util/app-path "../../../index.html")))
 
          (.on @*win* "closed" (fn [] (reset! *win* nil))))))
 

@@ -1,0 +1,34 @@
+@import "_includes";
+@import "_normalize";
+@import "_components";
+
+#app {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(300px, 25%) auto;
+    grid-template-rows: 1fr;
+    grid-template-areas: "sidebar content";
+}
+
+#sidebar {
+    @extend .container;
+    grid-area: sidebar;
+    border-right: 1px solid #AAA;
+    height: 100%;
+}
+
+#content {
+    @extend .container;
+    grid-area: content;
+}
+
+// #app {
+
+// }
+
+// #sidebar {
+//     @extend .ui .secondary .vertical .pointing .menu;
+//     height: 100%;
+//     width: 100%;
+// }

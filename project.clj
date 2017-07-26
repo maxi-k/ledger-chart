@@ -14,44 +14,7 @@
             [lein-shell "0.5.0"]
             [lein-figwheel "0.5.9" :exclusions [org.clojure/core.cache]]]
   :source-paths ["src_tools"]
-  :aliases {"descjop-help" ["new" "descjop" "help"]
-            "descjop-version" ["new" "descjop" "version"]
-            "descjop-init" ["do"
-                            ["shell" "npm" "install"]
-                            ["shell" "grunt" "download-electron"]]
-            "descjop-init-win" ["do"
-                            ["shell" "cmd.exe" "/c" "npm" "install"]
-                            ["shell" "cmd.exe" "/c" "grunt" "download-electron"]]
-            "descjop-externs" ["do"
-                               ["externs" "dev-main" "app/dev/js/externs.js"]
-                               ["externs" "dev-front" "app/dev/js/externs_front.js"]
-                               ["externs" "prod-main" "app/prod/js/externs.js"]
-                               ["externs" "prod-front" "app/prod/js/externs_front.js"]]
-            "descjop-externs-dev" ["do"
-                                   ["externs" "dev-main" "app/dev/js/externs.js"]
-                                   ["externs" "dev-front" "app/dev/js/externs_front.js"]]
-            "descjop-externs-prod" ["do"
-                                    ["externs" "prod-main" "app/prod/js/externs.js"]
-                                    ["externs" "prod-front" "app/prod/js/externs_front.js"]]
-            "descjop-figwheel" ["trampoline" "figwheel" "dev-front"]
-            "descjop-once" ["do"
-                            ["cljsbuild" "once" "dev-main"]
-                            ["cljsbuild" "once" "dev-front"]
-                            ["cljsbuild" "once" "prod-main"]
-                            ["cljsbuild" "once" "prod-front"]]
-            "descjop-once-dev" ["do"
-                                ["cljsbuild" "once" "dev-main"]
-                                ["cljsbuild" "once" "dev-front"]]
-            "descjop-once-prod" ["do"
-                                 ["cljsbuild" "once" "prod-main"]
-                                 ["cljsbuild" "once" "prod-front"]]
-            ;; electron packager for production
-            "descjop-uberapp-osx" ["shell" "electron-packager" "./app/prod" "ledger-chart" "--platform=darwin" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-app-store" ["shell" "electron-packager" "./app/prod" "ledger-chart" "--platform=mas" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-linux" ["shell" "electron-packager" "./app/prod" "ledger-chart" "--platform=linux" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-win64" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "ledger-chart" "--platform=win32" "--arch=x64" "--electron-version=1.6.6"]
-            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "ledger-chart" "--platform=win32" "--arch=ia32" "--electron-version=1.6.6"]
-            }
+
   :hooks [leiningen.cljsbuild]
   :cljsbuild {:builds {:dev-main {:source-paths ["src"]
                                   :incremental true
@@ -150,5 +113,45 @@
                                                :pretty-print true
                                                :output-wrapper true}}}}
   :figwheel {:http-server-root "public"
+             :css-dirs ["app/dev/css/", "app/prod/css"]
              :ring-handler figwheel-middleware/app
-             :server-port 3449})
+             :server-port 3449}
+  :aliases {"styles" ["shell" "grunt" "dev"]
+            "descjop-help" ["new" "descjop" "help"]
+            "descjop-version" ["new" "descjop" "version"]
+            "descjop-init" ["do"
+                            ["shell" "npm" "install"]
+                            ["shell" "grunt" "download-electron"]]
+            "descjop-init-win" ["do"
+                                ["shell" "cmd.exe" "/c" "npm" "install"]
+                                ["shell" "cmd.exe" "/c" "grunt" "download-electron"]]
+            "descjop-externs" ["do"
+                               ["externs" "dev-main" "app/dev/js/externs.js"]
+                               ["externs" "dev-front" "app/dev/js/externs_front.js"]
+                               ["externs" "prod-main" "app/prod/js/externs.js"]
+                               ["externs" "prod-front" "app/prod/js/externs_front.js"]]
+            "descjop-externs-dev" ["do"
+                                   ["externs" "dev-main" "app/dev/js/externs.js"]
+                                   ["externs" "dev-front" "app/dev/js/externs_front.js"]]
+            "descjop-externs-prod" ["do"
+                                    ["externs" "prod-main" "app/prod/js/externs.js"]
+                                    ["externs" "prod-front" "app/prod/js/externs_front.js"]]
+            "descjop-figwheel" ["trampoline" "figwheel" "dev-front"]
+            "descjop-once" ["do"
+                            ["cljsbuild" "once" "dev-main"]
+                            ["cljsbuild" "once" "dev-front"]
+                            ["cljsbuild" "once" "prod-main"]
+                            ["cljsbuild" "once" "prod-front"]]
+            "descjop-once-dev" ["do"
+                                ["cljsbuild" "once" "dev-main"]
+                                ["cljsbuild" "once" "dev-front"]]
+            "descjop-once-prod" ["do"
+                                 ["cljsbuild" "once" "prod-main"]
+                                 ["cljsbuild" "once" "prod-front"]]
+            ;; electron packager for production
+            "descjop-uberapp-osx" ["shell" "electron-packager" "./app/prod" "ledger-chart" "--platform=darwin" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-app-store" ["shell" "electron-packager" "./app/prod" "ledger-chart" "--platform=mas" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-linux" ["shell" "electron-packager" "./app/prod" "ledger-chart" "--platform=linux" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-win64" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "ledger-chart" "--platform=win32" "--arch=x64" "--electron-version=1.6.6"]
+            "descjop-uberapp-win32" ["shell" "cmd.exe" "/c" "electron-packager" "./app/prod" "ledger-chart" "--platform=win32" "--arch=ia32" "--electron-version=1.6.6"]
+            })
