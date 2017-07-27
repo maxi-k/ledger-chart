@@ -31,7 +31,9 @@
   (.on app "ready"
        (fn []
          (reset! *win* (BrowserWindow. (clj->js {:width 800
-                                                 :height 600})))
+                                                 :height 600
+                                                 :min-width 700
+                                                 :min-height 420})))
 
          ;; when no optimize comment out
          (.loadURL @*win* (str "file://" (util/app-path "../index.html")))

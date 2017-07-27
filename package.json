@@ -2,14 +2,19 @@
     "name": "ledger-chart",
     "version": "0.0.0",
     "description": "",
+    "license": "MIT",
+    "repository": "YOUR_OWN_REPOSITORY",
+    "dependencies": {
+        "semantic-ui-sass": "^2.2.11"
+    },
     "devDependencies": {
         "closurecompiler-externs": "^1.0.4",
         "electron-packager": "^8.5.1",
         "grunt": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
         "grunt-contrib-sass": "^1.0.0",
         "grunt-contrib-watch": "^1.0.0",
-        "grunt-download-electron": "^2.1.4"
-    },
-    "license": "MIT",
-    "repository": "YOUR_OWN_REPOSITORY"
+        "grunt-download-electron": "^2.1.4",
+        "grunt-font-awesome-vars": "^1.0.1"
+    }
 }

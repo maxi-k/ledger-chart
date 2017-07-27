@@ -1,21 +1,42 @@
 @import "_includes";
-@import "_normalize";
 @import "_components";
+
+.clearfloat { clear: both }
 
 #app {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(300px, 25%) auto;
-    grid-template-rows: 1fr;
-    grid-template-areas: "sidebar content";
+    grid-template-columns: minmax(250px, 20%) auto;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas: "header header"
+                             "sidebar content";
+}
+
+#header {
+    grid-area: header;
+    border-bottom: 1px solid $border-color;
+    padding: 5px 10px;
+
+    display: flex;
+    justify-content: space-between;
+
+    #title {
+        line-height: 40px;
+        margin: 0px;
+    }
 }
 
 #sidebar {
     @extend .container;
     grid-area: sidebar;
-    border-right: 1px solid #AAA;
+    border-right: 1px solid $border-color;
     height: 100%;
+
+    #sidebar-filter {
+        width: 100%;
+        margin: 0;
+    }
 }
 
 #content {
