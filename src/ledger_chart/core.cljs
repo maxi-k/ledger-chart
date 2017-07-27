@@ -1,5 +1,6 @@
 (ns ledger-chart.core
   (:require [cljs.nodejs :as nodejs]
+            [ledger-chart.api :as api]
             [ledger-chart.util :as util]))
 
 (def Electron (nodejs/require "electron"))
@@ -32,9 +33,8 @@
        (fn []
          (reset! *win* (BrowserWindow. (clj->js {:width 800
                                                  :height 600
-                                                 :min-width 700
-                                                 :min-height 420})))
-
+                                                 :minWidth 700
+                                                 :minHeight 420})))
          ;; when no optimize comment out
          (.loadURL @*win* (str "file://" (util/app-path "../index.html")))
          ;; when no optimize uncomment
