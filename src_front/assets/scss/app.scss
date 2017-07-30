@@ -21,9 +21,16 @@
     display: flex;
     justify-content: space-between;
 
-    #title {
-        line-height: 40px;
-        margin: 0px;
+    #title-wrapper {
+        display: flex;
+        #title {
+            line-height: 40px;
+            margin: 0px;
+        }
+        #title-logo {
+            background: url("../logo/logo.svg");
+            padding: 22px;
+        }
     }
 
     & > * {
@@ -58,6 +65,17 @@
 #content {
     @extend .container;
     grid-area: content;
+}
+
+#initial-loader {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25%;
+    text-align: center;
+    p {
+        font-size: 1.5rem;
+        padding-top: 20px;
+    }
 }
 
 // #app {

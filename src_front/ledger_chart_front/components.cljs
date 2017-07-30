@@ -19,7 +19,10 @@
 
 (defn header []
   [:section#header.fxbox
-   [:h2#title (data/constants :app-title)]
+   [:div#title-wrapper
+    [:div#title-logo " "]
+    [:h2#title
+     (data/constants :app-title)]]
    [:div#ledger-options-menu
     [sa/Input {:id :ledger-options-input
                :action {:content "Run" :color :blue :icon :refresh
@@ -49,5 +52,4 @@
             :action {:icon "filter"}}]])
 
 (defn content []
-  [:section#content
-   [:h3 "Charts"]])
+  [:section#content])

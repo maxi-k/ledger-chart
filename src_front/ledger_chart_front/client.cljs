@@ -9,5 +9,6 @@
 (defn choose-file []
   (let [files (js->clj (.showOpenDialog (.-dialog remote) {:properties ["openFile"]}))
         file (nth files 0)]
-    (reset! data/current-file file)
-    (reset! data/window-title (str file " - " (:app-title data/constants)))))
+    (when (some? file)
+      (reset! data/current-file file)
+      (reset! data/window-title (str file " - " (:app-title data/constants))))))
