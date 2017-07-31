@@ -21,7 +21,8 @@
   params has to be a list of parameters.
   out, err, exit should be callbacks for output, error and exit respectively."
   [cmd params out error exit]
-  (let [ledger (exec (str "ledger " cmd " " params))]
+  (let [ledger (exec (str "ledger " cmd " --no-pager " params)
+                     (clj->js {:maxBuffer (.-MAX_VALUE js/Number)}))]
     (.. ledger -stdout (on "data" out))
     (.. ledger -stderr (on "data" error))
     (.. ledger (on "exit" exit))
