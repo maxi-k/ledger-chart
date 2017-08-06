@@ -38,9 +38,12 @@
         result-chan (go-loop [result ""]
                       (let [[data c] (alts! [data-chan err-chan exit-chan]
                                             :priority true)]
-                        (condp identical? c
-                          data-chan (recur (str result data))
-                          [data result])))]
+                        ;; If it's new data, recur with that
+                        ;; otherwise return immediately with the result-code
+                        ;; and the data collected until now
+                        (if (identical? data-chan c)
+                           (recur (str result data))
+                           [data result])))]
     (exec-ledger "xml" (str "-f " file " " params)
                  #(async/put! data-chan %)
                  #(async/put! err-chan %)
@@ -52,3 +55,16 @@
   Calls 'callback' with a vector [exit-code or error, result] once ready."
   [file params callback]
   (async/take! (ledger-xml-async file params) callback))
+
+(defn ledger-xml-store!
+  "Executes ledger with the file and options saved in app-state.
+  Saves the result in app-state asynchronously."
+  []
+  (if (empty? @data/current-file)
+    (js/alert "Please select a Ledger Journal File.")
+    (ledger-xml
+     @data/current-file
+     (:ledger-options @data/state)
+     (fn [[code data]]
+       (reset! data/ledger-error code)
+       (reset! data/ledger-data (data/from-xml data))))))

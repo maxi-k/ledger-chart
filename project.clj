@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.671" :exclusions [org.apache.ant/ant]]
                  [org.clojure/core.async "0.3.443"]
+                 [funcool/tubax "0.2.0"] ;; xml<->cljs
                  [reagent "0.6.1"]
                  [soda-ash "0.3.0"]
                  [ring/ring-core "1.5.1"]

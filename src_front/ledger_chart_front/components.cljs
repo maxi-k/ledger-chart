@@ -22,15 +22,9 @@
   [:div#ledger-options-menu
    [sa/Input {:id :ledger-options-input
               :action {:content "Run" :color :blue :icon :refresh
-                       :on-click (fn []
-                                   (client/ledger-xml
-                                    @data/current-file
-                                    (:ledger-options @data/state)
-                                    (fn [res]
-                                      (.log js/console "got here!")
-                                      (.log js/console (str res)))))}
+                       :on-click #(client/ledger-xml-store!)}
               :value (:ledger-options @data/state)
-              :on-change #(swap! data/state assoc :ledger-options (.-value %2))
+              :on-key-up #(swap! data/state assoc :ledger-options (.-value %2))
               :label (r/as-element
                       [sa/Dropdown {:id :ledger-command-dropdown
                                     :options data/ledger-commands
@@ -64,4 +58,6 @@
             :action {:icon "filter"}}]])
 
 (defn content []
-  [:section#content])
+  [:section#content
+   [:p {:style {:color "red"}} @data/ledger-error]
+   [:p (str @data/ledger-data)]])
