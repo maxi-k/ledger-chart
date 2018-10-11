@@ -1,0 +1,7 @@
+2018/01/20 * Example Transaction
+    Assets:Bank:Ethereum                         200 EUR
+    Assets:Bank:Coinbase
+
+2018/01/20 * Example Transaction 2
+    Expenses:Transaction:Fees                     10 EUR
+    Assets:Bank:Coinbase
