@@ -67,6 +67,19 @@
     grid-area: content;
     overflow-x: auto;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    #chart-wrapper {
+        align-self: stretch;
+        flex-grow: 10;
+    }
+}
+
+
+#chart-options-menu {
+    align-self: flex-end;
 }
 
 #initial-loader {

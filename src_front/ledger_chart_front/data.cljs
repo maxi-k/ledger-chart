@@ -13,13 +13,20 @@
         [["bal" "Balance"]
          ["reg" "Register"]]))
 
+(def chart-types
+  (mapv (fn [[s h]] {:key s :text h :value s})
+        [[:monthly "Monthly"]
+         [:category "Categories"]]))
+
 (def initial-state
   {:window-title (constants :app-title)
    :view-filter ""
    :ledger-data {}
    :ledger-error ""
    :ledger-options ""
-   :ledger-command (get-in ledger-commands [0 :value])})
+   :ledger-command (get-in ledger-commands [0 :value])
+   :selected-categories []
+   :chart-type (get-in chart-types [0 :value])})
 
 (defonce state (atom initial-state))
 

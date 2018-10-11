@@ -35,6 +35,19 @@
                                     :value (:ledger-command @data/state)}])
               :label-position :left}]])
 
+(defn chart-options-menu []
+  [:div#chart-options-menu
+   [sa/Dropdown {:id :chart-options-dropdown
+                 :class-name "icon"
+                 :icon "pie chart"
+                 :labeled true
+                 :button true
+                 :selection true
+                 :icon-position "right"
+                 :options data/chart-types
+                 :on-change #(swap! data/state assoc :chart-type (.-value %2))
+                 :value (:chart-type @data/state)}]])
+
 (defn file-chooser []
   [sa/Button {:on-click (fn [e] (client/choose-file))}
    "Open File..."])
@@ -57,7 +70,15 @@
             :on-change #(swap! data/state assoc :view-filter (.-value %2))
             :action {:icon "filter"}}]])
 
+(defn chart-view
+  []
+  [:div#chart-wrapper
+   (let [categories (:selected-categories @data/ledger-data)
+         chart-type (:chart-type @data/ledger-data)]
+     [:p {:style {:color "red"}} @data/ledger-error]
+     [:p (str @data/ledger-data)])])
+
 (defn content []
   [:section#content
-   [:p {:style {:color "red"}} @data/ledger-error]
-   [:p (str @data/ledger-data)]])
+   [chart-options-menu]
+   [chart-view]])
