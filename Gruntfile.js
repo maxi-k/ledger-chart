@@ -11,12 +11,10 @@ module.exports = function(grunt) {
         },
         sass: {
             dev_bootstrap: {
-                options: { sourcemap: 'auto' },
                 files: [{ src: './node_modules/semantic-ui-sass/semantic-ui.scss',
                           dest: './app/dev/css/base.css' }]
             },
             dev: {
-                options: { sourcemap: 'auto' },
                 files: [{ src: './src_front/assets/scss/app.scss',
                           dest: './app/dev/css/app.css' }]
             }

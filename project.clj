@@ -3,18 +3,19 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.671" :exclusions [org.apache.ant/ant]]
-                 [org.clojure/core.async "0.3.443"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.10.339" :exclusions [org.apache.ant/ant]]
+                 [org.clojure/core.async "0.4.474"]
                  [funcool/tubax "0.2.0"] ;; xml<->cljs
-                 [reagent "0.6.1"]
-                 [soda-ash "0.3.0"]
-                 [ring/ring-core "1.5.1"]
-                 [figwheel "0.5.9"]]
-  :plugins [[lein-cljsbuild "1.1.5"]
+                 [reagent "0.8.1"]
+                 [soda-ash "0.82.2"]
+                 [cljsjs/recharts "1.1.0-3"]
+                 [ring/ring-core "1.7.0"]
+                 [figwheel "0.5.16"]]
+  :plugins [[lein-cljsbuild "1.1.7"]
             [lein-externs "0.1.6"]
             [lein-shell "0.5.0"]
-            [lein-figwheel "0.5.9" :exclusions [org.clojure/core.cache]]]
+            [lein-figwheel "0.5.16" :exclusions [org.clojure/core.cache]]]
   :source-paths ["src_tools"]
 
   :hooks [leiningen.cljsbuild]
