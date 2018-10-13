@@ -5,10 +5,14 @@
 (def example-data
   {:monthly [{:name "2018-01"
               :income 100
-              :expenses 100}
+              :expenses 100
+              :assets 1098
+              :liabilities 50}
              {:name "2018-02"
               :income 301
-              :expenses 182}
+              :expenses 182
+              :assets 1034
+              :liabilities 108}
              {:name "2018-03"
               :income 1982
               :expenses 102}]
@@ -28,6 +32,19 @@
 (def BarChart (reagent/adapt-react-class (aget js/Recharts "BarChart")))
 (def Bar (reagent/adapt-react-class (aget js/Recharts "Bar")))
 
+(def account-colors
+  "Colors used for commonly named accounts per default."
+  {:expenses "#DD2C00"
+   :income "#558B2F"
+   :assets "#01579B"
+   :liabilities "#7B1FA2"
+   :default "#263238"})
+
+(def default-account-color
+  "Color used for account-names which do not have a
+  predefined color set."
+  (:default account-colors))
+
 (defmulti draw-chart
   "Reagent component for drawing a chart,
   which dispatches based on the given chart type."
@@ -42,9 +59,10 @@
     [CartesianGrid {:strokeDasharray "3 3"}]
     [Tooltip]
     [Legend]
-    [Line {:type "monotone" :dataKey :expenses}]
-    [Line {:type "monotone" :dataKey :income}]]]
-  )
+    (for [acc-name [:income :expenses :liabilities :assets]]
+      [Line {:type "monotone"
+             :dataKey acc-name
+             :stroke (get account-colors acc-name default-account-color)}])]])
 
 (defmethod draw-chart :category
   [type data]
