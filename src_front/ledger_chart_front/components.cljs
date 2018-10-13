@@ -5,7 +5,8 @@
             [goog.dom.forms :as forms]
             [goog.dom :as dom]
             [ledger-chart-front.data :as data]
-            [ledger-chart-front.client :as client]))
+            [ledger-chart-front.client :as client]
+            [ledger-chart-front.chart :as chart]))
 
 (defn icon [i & options]
   (let [ops (if (empty? options) {} (first options))
@@ -43,9 +44,8 @@
                  :labeled true
                  :button true
                  :selection true
-                 :icon-position "right"
                  :options data/chart-types
-                 :on-change #(swap! data/state assoc :chart-type (.-value %2))
+                 :on-change #(swap! data/state assoc :chart-type (-> %2 .-value keyword))
                  :value (:chart-type @data/state)}]])
 
 (defn file-chooser []
@@ -73,10 +73,11 @@
 (defn chart-view
   []
   [:div#chart-wrapper
-   (let [categories (:selected-categories @data/ledger-data)
-         chart-type (:chart-type @data/ledger-data)]
-     [:p {:style {:color "red"}} @data/ledger-error]
-     [:p (str @data/ledger-data)])])
+   (let [categories (:selected-categories @data/state)
+         chart-type (:chart-type @data/state)]
+     [chart/draw-chart chart-type {}]
+     #_[:p {:style {:color "red"}} @data/ledger-error]
+     #_[:p (str @data/ledger-data)])])
 
 (defn content []
   [:section#content

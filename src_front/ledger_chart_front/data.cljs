@@ -28,7 +28,7 @@
    :selected-categories []
    :chart-type (get-in chart-types [0 :value])})
 
-(defonce state (atom initial-state))
+(defonce state (r/atom initial-state))
 
 (def current-file (r/cursor state [:current-file]))
 (def window-title (r/cursor state [:window-title]))
