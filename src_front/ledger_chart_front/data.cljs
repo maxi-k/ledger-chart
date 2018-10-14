@@ -102,7 +102,10 @@
                       [] s))
        (handler (fnm s))))))
 
-(defn get-accounts [xml-data]
+(defn get-accounts
+  "Extract the account data from the raw xml data returned by a ledger command
+  (as stored in `ledger-data`)."
+  [xml-data]
   (->> xml-data
        :content
        (filter #(and (map? %) (= (% :tag) :accounts)))

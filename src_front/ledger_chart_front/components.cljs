@@ -74,8 +74,10 @@
   []
   [:div#chart-wrapper
    (let [categories (:selected-categories @data/state)
+         ledger-data @data/ledger-data
+         error @data/ledger-error
          chart-type (:chart-type @data/state)]
-     [chart/draw-chart chart-type {}]
+     [chart/draw-chart chart-type ledger-data]
      #_[:p {:style {:color "red"}} @data/ledger-error]
      #_[:p (str @data/ledger-data)])])
 

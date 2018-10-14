@@ -5,3 +5,7 @@
 2018/01/20 * Example Transaction 2
     Expenses:Transaction:Fees                     10 EUR
     Assets:Bank:Coinbase
+
+2018/01/20 * Example Transaction 3
+    Assets:Bank                                  500 EUR
+    Liabilities:Loan                             -500 EUR
