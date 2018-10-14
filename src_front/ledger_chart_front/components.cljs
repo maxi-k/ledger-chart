@@ -25,7 +25,7 @@
               :action {:content "Run" :color :blue :icon :refresh
                        :on-click #(client/ledger-xml-store!)}
               :value (:ledger-options @data/state)
-              :on-key-up #(swap! data/state assoc :ledger-options (.-value %2))
+              :on-change #(swap! data/state assoc :ledger-options (.-value %2))
               :label (r/as-element
                       [sa/Dropdown {:id :ledger-command-dropdown
                                     :options data/ledger-commands
